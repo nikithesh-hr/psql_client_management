@@ -1,7 +1,7 @@
 "use strict";
 
 const Boom = require("@hapi/boom");
-const Meetdetails = require("../schemas/meetdetails");
+
 module.exports = async (request, h) => {
  
   const { params } = request;

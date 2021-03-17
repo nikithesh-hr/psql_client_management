@@ -1,10 +1,20 @@
 "use strict";
 
 const Glue = require("@hapi/glue");
-const mongoose = require("mongoose");
+
 const manifest = require("./manifest");
 
-mongoose.Promise = require("bluebird");
+const { Client } = require('pg');
+
+const client = new Client({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'clientmanage',
+  password: 'nhr',
+  port: 5432,
+});
+
+
 
 exports.deployment = async (start) => {
   try {
@@ -20,13 +30,10 @@ exports.deployment = async (start) => {
 
     console.log(`Server started at ${server.info.uri}`);
 
-    await mongoose.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    });
+    await  client.connect();
 
-    return server;
+     
+
   } catch (e) {
     console.log(e);
   }
